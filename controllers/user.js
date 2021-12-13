@@ -7,90 +7,146 @@
 const Deck = require('../models/Deck');
 const User = require('../models/User');
 
-const getUser = async(req, res, next) => {
-    const {userID} = req.value.params;
+const JWT = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config/index');
 
-    const user = await User.findById(userID);
+const encodedToken = (userID) => {
+    return JWT.sign({
+        iss:'Quoc Hieu',
+        sub: userID,
+        iat: new Date().getTime(),
+        exp: new Date().setDate(new Date().getDate() + 3)
+    },JWT_SECRET)
+}
+const authGoogle = async (req, res, next) => {
+  const token = encodedToken(req.user._id);
 
-    return res.status(200).json({user});
+  res.setHeader('Authorization', token);
+  res.status(200).json({success: true});
 }
 
-const getUserDecks = async(req, res, next) => {
-    const {userID} = req.value.params;
+const authFacebook = async (req, res, next) => {
+  const token = encodedToken(req.user._id);
 
-    const user = await User.findById(userID).populate('decks')
-
-    return res.status(200).json({decks: user.decks})
-
+  res.setHeader('Authorization', token);
+  res.status(200).json({success: true});
 }
+
+const signUp = async (req, res, next) => {
+  const {firstName, lastName, email, password} = req.value.body;
+
+  //Check if there is a user same email
+  const foundUser = await User.findOne({email});
+  if(foundUser) return res.status(403).json({error: {message: "Emal is already in use. "}})
+
+  //Create new user
+  const newUser = await new User({firstName, lastName, email, password});
+  await newUser.save();
+
+  const token = encodedToken(newUser._id);
+  res.setHeader('Authorization', token);
+  
+  res.status(201).json({success:true});
+};
+
+const signIn = async (req, res, next) => {
+  const token = encodedToken(req.user._id)
+  
+  res.setHeader('Authorization', token);
+  res.status(200).json({success: true});
+};
+
+const secrect = async (req, res, next) => {
+  return res.status(200).json({resource: true})
+};
+
+const getUser = async (req, res, next) => {
+  const { userID } = req.value.params;
+
+  const user = await User.findById(userID);
+
+  return res.status(200).json({ user });
+};
+
+const getUserDecks = async (req, res, next) => {
+  const { userID } = req.value.params;
+
+  const user = await User.findById(userID).populate('decks');
+
+  return res.status(200).json({ decks: user.decks });
+};
 
 const index = async (req, res, next) => {
-    const user = await User.find({})
+  const user = await User.find({});
 
-    return res.status(200).json(user);   
-}
+  return res.status(200).json(user);
+};
 
 const newUser = async (req, res, next) => {
+  const newUser = await new User(req.value.body);
 
-    const newUser = await new User(req.value.body);
-    
-    await newUser.save();
-     
-    return res.status(201).json({user : newUser});
-}
+  await newUser.save();
+
+  return res.status(201).json({ user: newUser });
+};
 
 const newUserDeck = async (req, res, next) => {
-    const {userID} = req.value.params;
+  const { userID } = req.value.params;
 
-    //Create a new deck
-    const newDeck = new Deck(req.value.body)
+  //Create a new deck
+  const newDeck = new Deck(req.value.body);
 
-    //Get user
-    const user = await User.findById(userID);
+  //Get user
+  const user = await User.findById(userID);
 
-    //Assign user as a deck's owner
-    newDeck.owner = user;
+  //Assign user as a deck's owner
+  newDeck.owner = user;
 
-    //Save the deck
-    await newDeck.save();
+  //Save the deck
+  await newDeck.save();
 
-    //Add deck to user's  decks array 'decks'
-    user.decks.push(newDeck._id);
+  //Add deck to user's  decks array 'decks'
+  user.decks.push(newDeck._id);
 
-    //Save user
-    await user.save();
+  //Save user
+  await user.save();
 
-    return res.status(201).json({deck: newDeck});
-}
+  return res.status(201).json({ deck: newDeck });
+};
 
 const replaceUser = async (req, res, next) => {
-    //enforce new user to old user
-    const {userID} = req.value.params;
+  //enforce new user to old user
+  const { userID } = req.value.params;
 
-    const newUser = req.value.body;
+  const newUser = req.value.body;
 
-    const result = await User.findByIdAndUpdate(userID, newUser);
+  const result = await User.findByIdAndUpdate(userID, newUser);
 
-    return res.status(200).json({success: true});
-}
+  return res.status(200).json({ success: true });
+};
 
 const updateUser = async (req, res, next) => {
-    //number of fields
-    const {userID} = req.value.params;
+  //number of fields
+  const { userID } = req.value.params;
 
-    const newUser = req.value.body;
+  const newUser = req.value.body;
 
-    const result = await User.findByIdAndUpdate(userID, newUser);
+  const result = await User.findByIdAndUpdate(userID, newUser);
 
-    return res.status(200).json({success: true});
-}
+  return res.status(200).json({ success: true });
+};
 
 module.exports = {
-    getUser,
-    getUserDecks,
-    index,
-    newUser,
-    newUserDeck,
-    replaceUser,
-    updateUser,
-}
+  authGoogle,
+  authFacebook,
+  signUp,
+  signIn,
+  secrect,
+  getUser,
+  getUserDecks,
+  index,
+  newUser,
+  newUserDeck,
+  replaceUser,
+  updateUser,
+};
