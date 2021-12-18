@@ -61,6 +61,7 @@ const schemas = {
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ['com'] } })
       .required(),
+    password: Joi.string().min(6).required()
   }),
 
   userOption: Joi.object().keys({

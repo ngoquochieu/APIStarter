@@ -7,9 +7,12 @@ const secureApp = require('helmet');
 const passport = require('passport');
 // Set up connect mongodb by mongoose
 mongoose
-  .connect(process.env.DATABASE)
+  .connect(process.env.DATABASE, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+  })
   .then(() => console.log('✅ Connected database from mongodb '))
-  .catch(() =>
+  .catch((error) =>
     console.error(`❌ Connect database is failed with error which is ${error}`)
   );
 
