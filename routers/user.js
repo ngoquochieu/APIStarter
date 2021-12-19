@@ -21,28 +21,16 @@ router.route('/signup').post(validateBody(schemas.authSignUpSchema), UserControl
 
 router.route('/signin').post(validateBody(schemas.authSignInSchema), passport.authenticate('local', ({session: false})), UserController.signIn);
 
-router.route('/secret').get(passport.authenticate('jwt', {session: false}), UserController.secrect);
+router.route('/secret').get(passport.authenticate('jwt', {session: false}), UserController.secrect); //Test
 
 router.route('/:userID')
   .get(validateParam(schemas.idSchema, 'userID'), UserController.getUser)
-  .put(
-    validateParam(schemas.idSchema, 'userID'),
-    validateBody(schemas.userSchema),
-    UserController.replaceUser
-  )
-  .patch(
-    validateParam(schemas.idSchema, 'userID'),
-    validateBody(schemas.userOption),
-    UserController.updateUser
-  );
+  // .put(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchema), UserController.replaceUser)
+  .patch(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userOption), UserController.updateUser)
+  .delete(validateParam(schemas.idSchema, 'userID'), UserController.deleteUser)
 
-router
-  .route('/:userID/decks')
+router.route('/:userID/decks')
   .get(validateParam(schemas.idSchema, 'userID'), UserController.getUserDecks)
-  .post(
-    validateParam(schemas.idSchema, 'userID'),
-    validateBody(schemas.deckSchema),
-    UserController.newUserDeck
-  );
+  .post(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.deckSchema), UserController.newUserDeck);
 
 module.exports = router;

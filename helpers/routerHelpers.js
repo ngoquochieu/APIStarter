@@ -63,14 +63,11 @@ const schemas = {
       .required(),
     password: Joi.string().min(6).required()
   }),
+  
 
   userOption: Joi.object().keys({
     firstName: Joi.string().min(2),
     lastName: Joi.string().min(2),
-    email: Joi.string().email({
-      minDomainSegments: 2,
-      tlds: { allow: ['com'] },
-    }),
   }),
 
   deckSchema: Joi.object().keys({
@@ -81,9 +78,6 @@ const schemas = {
   newDeckSchema: Joi.object().keys({
     name: Joi.string().min(6).required(),
     description: Joi.string().min(10).required(),
-    owner: Joi.string()
-      .regex(/^[0-9a-fA-F]{24}$/)
-      .required(),
   }),
 
   optionDeck: Joi.object().keys({

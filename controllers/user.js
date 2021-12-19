@@ -83,6 +83,11 @@ const index = async (req, res, next) => {
 };
 
 const newUser = async (req, res, next) => {
+  const {email} = req.value.body;
+
+  const user = await User.findOne({email});
+  if(user) return res.status(400).json({error:{message:'Email already in use'}})
+
   const newUser = await new User(req.value.body);
 
   await newUser.save();
@@ -114,16 +119,16 @@ const newUserDeck = async (req, res, next) => {
   return res.status(201).json({ deck: newDeck });
 };
 
-const replaceUser = async (req, res, next) => {
-  //enforce new user to old user
-  const { userID } = req.value.params;
+// const replaceUser = async (req, res, next) => {
+//   //enforce new user to old user
+//   const { userID } = req.value.params;
 
-  const newUser = req.value.body;
+//   const newUser = req.value.body;
 
-  const result = await User.findByIdAndUpdate(userID, newUser);
+//   const result = await User.findByIdAndUpdate(userID, newUser);
 
-  return res.status(200).json({ success: true });
-};
+//   return res.status(200).json({ success: true });
+// };
 
 const updateUser = async (req, res, next) => {
   //number of fields
@@ -136,6 +141,10 @@ const updateUser = async (req, res, next) => {
   return res.status(200).json({ success: true });
 };
 
+const deleteUser = async (req, res, next) => {
+  const {userID} = req.value.params; 
+}
+
 module.exports = {
   authGoogle,
   authFacebook,
@@ -147,6 +156,7 @@ module.exports = {
   index,
   newUser,
   newUserDeck,
-  replaceUser,
+  // replaceUser,
   updateUser,
+  deleteUser
 };
