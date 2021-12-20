@@ -1,0 +1,405 @@
+paths:
+  /signup:
+    post:
+      tags:
+        - Auth
+      summary: Sign up user
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: "User object that needs to be create new user"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201": # status code
+          description: Create user successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /signin:
+    post:
+      tags:
+        - Auth
+      summary: Sign in 
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201": # status code
+          description: Create user successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /users/auth/google:
+    post:
+      tags:
+        - Auth
+      summary: Sign in with google
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  example: ya29.a0ARrdaM89lQwS8BJdDmwEC_9DzsaYRO1cQwffGlmlwX7ogE7nu1jAdbkLvMPKTU-h3hJiFq6-z5fYeK9eUe1xdjjZwI8zZeJE9dRVEij8igHfSprF3E3WwMuAEllVIRxGtNrfLovZ-rrbY9j1sq_TmYGr6eLC
+      responses:
+        "201": # status code
+          description: 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /users/auth/facebook:
+    post:
+      tags:
+        - Auth
+      summary: Sign in with facebook
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_token:
+                  type: string
+                  example: EAArUdaNwYI8BAPfZB05BQ0iZA4HEwANfTTOZCQLkZA7zasSSXIah7KzLbauJbUJya526sHkYXNQIvY27wxAbhxAMSrBILwVsorr3izqUDZCqkljj8Yo0obRM70GJoVzYDcdwOIR6Kgkk6LShAK8TITUliWjVR9QfZC22lq1jA1B58CiEUVRNdkL1TTOrpHXg0PhlsZBFZCKB9KQOcUnZB9SmdqC30brAd1dvezfYyshZBZBbQu0IBj8dpeu
+      responses:
+        "201": # status code
+          description: 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+  /users:
+    get:
+      tags:
+        - User
+      summary: Returns a list of users.
+      description: Optional extended description in CommonMark or HTML.
+      parameters:
+      responses:
+        "200": # status code
+          description: A JSON array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+    post:
+      tags:
+        - User
+      summary: Create new User.
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: "User object that needs to be create new user"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "201": # status code
+          description: Create user successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+#------------------#
+  /users/:id:
+    get:
+      tags:
+        - User
+      summary: Return a user.
+      description: Optional extended description in CommonMark or HTML.  
+      responses:
+        "200": # status code
+          description: A JSON of user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    example: 61bf0221419b66512b928c87
+                  firstName:
+                    type: string
+                    example: 'Ngo'
+                  lastName:
+                    type: string
+                    example: 'Q Hieu'
+                  email:
+                    type: string
+                    example: "quochieutb12@gmail.com"
+                  password:
+                    type: string
+                    example: "abczyx123"
+                  authGoogleID: 
+                    type: string
+                    example: null
+                  authFacebookID: 
+                    type: string
+                    example: null
+                  authType: 
+                    type: string
+                    example: local
+                  decks: 
+                    type: array
+                    items:
+                      type: string
+                      example: 61bf4b743caf1e1b4f90796e
+    patch:
+      tags:
+        - User
+      summary: Update user.
+      description: Optional extended description in CommonMark or HTML.  
+      requestBody:
+        name: "body"
+        description: "User object that needs to be update"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200": # status code
+          description: Update user successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                    example: true
+#------------------------#
+/users/:id/decks:
+    get:
+      tags:
+        - User
+      summary: Return list decks of a user.
+      description: Optional extended description in CommonMark or HTML.  
+      responses:
+        "200": # status code
+          description: A JSON array decks of a user
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    id: 
+                      type: string
+                      example: 61bf0221419b66512b928c87
+                    name:
+                      type: string
+                      example: Learning Math-4
+                    description:
+                      type: string
+                      example: In three month
+                    owner:
+                      type: string
+                      example: "61bf52d9d72174936ac8177b"
+    post:
+      tags:
+        - User
+      summary: User create new deck
+      description: Optional extended description in CommonMark or HTML.  
+      responses:
+        "201": # status code
+          description:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean 
+                    example:  true
+#-----------------------#
+/decks:
+  get:
+    tags:
+      - Deck
+    summary: Returns a list of users.
+    description: Optional extended description in CommonMark or HTML.
+    parameters:
+    responses:
+      "200": # status code
+        description: A JSON array of decks
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+  post:
+    tags:
+      - Deck
+    summary: Create new deck
+    description: Optional extended description in CommonMark or HTML.  
+    responses:
+      "201": # status code
+        description: Return the newly created deck
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id: 
+                  type: string
+                  example: 61c08ffe9012c8b0d90bc78a
+                name:
+                  type: string
+                  example: Learning Math-5
+                description:
+                  type: string
+                  example: In three month
+/decks/:id:
+  get:
+    tags:
+      - Deck
+    summary: Get a deck
+    description: Optional extended description in CommonMark or HTML.  
+    responses:
+       "201": # status code
+          description: Return a deck
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: string
+                    example: 61c08ffe9012c8b0d90bc78a
+                  name:
+                    type: string
+                    example: Learning Math-5
+                  description:
+                    type: string
+                    example: In three month
+                  owner: 
+                    type: object
+  patch:
+    tags:
+      - Deck
+    summary: Update deck.
+    description: Optional extended description in CommonMark or HTML.  
+    requestBody:
+      name: "body"
+      description: "Deck object that needs to be update"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              owner:
+                type: string
+    responses:
+      "200": # status code
+        description: Update deck successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success: 
+                  type: boolean
+                  example: true
+  delete:
+    tags:
+      - Deck
+    summary: Delete a deck
+    description: Optional extended description in CommonMark or HTML.  
+    responses:
+       "200": # status code
+          description:
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true

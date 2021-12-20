@@ -1,10 +1,14 @@
 //Config env
 require('dotenv').config();
 const express = require('express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const secureApp = require('helmet');
 const passport = require('passport');
+
+const swaggerLoader = require('./loaders/swaggerLoader');
 // Set up connect mongodb by mongoose
 mongoose
   .connect(process.env.DATABASE, {
@@ -17,7 +21,7 @@ mongoose
   );
 
 const app = express();
-
+swaggerLoader(app);
 app.use(secureApp());
 app.use(passport.initialize())
 

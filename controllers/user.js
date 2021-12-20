@@ -92,7 +92,7 @@ const newUser = async (req, res, next) => {
 
   await newUser.save();
 
-  return res.status(201).json({ user: newUser });
+  return res.status(201).json({ success: true });
 };
 
 const newUserDeck = async (req, res, next) => {
@@ -116,7 +116,7 @@ const newUserDeck = async (req, res, next) => {
   //Save user
   await user.save();
 
-  return res.status(201).json({ deck: newDeck });
+  return res.status(201).json({ success: true });
 };
 
 // const replaceUser = async (req, res, next) => {
@@ -138,7 +138,7 @@ const updateUser = async (req, res, next) => {
 
   const result = await User.findByIdAndUpdate(userID, newUser);
 
-  return res.status(200).json({ success: true });
+  return res.status(200).json({ message: {success: true }});
 };
 
 const deleteUser = async (req, res, next) => {

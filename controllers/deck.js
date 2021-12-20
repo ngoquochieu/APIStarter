@@ -55,6 +55,26 @@ const updateDeck = async (req, res, next) => {
   const { deckID } = req.value.params;
   const newDeck = req.value.body;
 
+  const currentDeck = await Deck.findById(deckID);
+  if(newDeck.owner) {
+    const oldOwner = await User.findById(currentDeck.owner);
+    
+    oldOwner.decks.pull(currentDeck);
+    await oldOwner.save();
+
+
+    const newOwner = await User.findById(newDeck.owner);
+    delete newDeck.owner;
+
+    const result = await Deck.findByIdAndUpdate(deckID, newDeck);
+    result.owner = newOwner;
+    newOwner.decks.push(result._id);
+    await newOwner.save();
+    await result.save();
+
+    res.status(200).json({success: true});
+
+  }
   const result = await Deck.findByIdAndUpdate(deckID, newDeck);
 
   return res.status(200).json({ success: true });
