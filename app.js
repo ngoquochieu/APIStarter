@@ -27,6 +27,7 @@ app.use(passport.initialize())
 
 const usersRouter = require('./routers/user');
 const decksRouter = require('./routers/deck');
+const itemsRouter = require('./routers/item');
 
 //Middleware
 app.use(logger('dev'));
@@ -38,6 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 //Routers
 app.use('/users', usersRouter);
 app.use('/decks', decksRouter);
+app.use('/items', itemsRouter);
 // Catch 404 Errors and forward them to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');

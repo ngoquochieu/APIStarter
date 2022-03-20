@@ -18,6 +18,7 @@ const encodedToken = (userID) => {
         exp: new Date().setDate(new Date().getDate() + 3)
     },JWT_SECRET)
 }
+
 const authGoogle = async (req, res, next) => {
   const token = encodedToken(req.user._id);
 
@@ -43,8 +44,8 @@ const signUp = async (req, res, next) => {
   const newUser = await new User({firstName, lastName, email, password});
   await newUser.save();
 
-  const token = encodedToken(newUser._id);
-  res.setHeader('Authorization', token);
+  // const token = encodedToken(newUser._id);
+  // res.setHeader('Authorization', token);
   
   res.status(201).json({success:true});
 };

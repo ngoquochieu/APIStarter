@@ -32,8 +32,10 @@ passport.use(new GooglePlusTokenStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         // Check whether this current user exists in our database
-        const user = await User.findOne({authGoogleID:profile.id, authType:'goolge'});
-
+        
+        // const user = await User.find({authGoogleID:profile.id, authType:'goolge'});
+        const user = await User.findOne({authGoogleID:profile.id});
+        
         if(user) return done(null, user);
 
         // If new account
@@ -59,7 +61,7 @@ passport.use(new FacebookTokenStrategy({
     try {
         
         // Check whether this current user exists in our database
-        const user = await User.findOne({authGoogleID:profile.id, authType:'goolge'});
+        const user = await User.findone({authFacebookID:profile.id});
 
         if(user) return done(null, user);
 
