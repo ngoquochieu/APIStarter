@@ -41,7 +41,7 @@ const schemas = {
     //   .email({ minDomainSegments: 2, tlds: { allow: ['com'] } })
     //   .required(),
     username: Joi.string().min(3).required(),
-    sdt: Joi.string().min(10).max(10).required(),
+    phone: Joi.string().min(10).max(10).required(),
     password: Joi.string().min(6).required(),
   }),
 
