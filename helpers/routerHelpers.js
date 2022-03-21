@@ -43,6 +43,7 @@ const schemas = {
     username: Joi.string().min(3).required(),
     phone: Joi.string().min(10).max(10).required(),
     password: Joi.string().min(6).required(),
+    repeat_password: Joi.ref('password'),
   }),
 
   authSignInSchema: Joi.object().keys({
@@ -62,7 +63,7 @@ const schemas = {
     email: Joi.string()
       .email({ minDomainSegments: 2, tlds: { allow: ['com'] } })
       .required(),
-    password: Joi.string().min(6).required()
+    password: Joi.string().min(6).required(),
   }),
   
 
@@ -79,6 +80,18 @@ const schemas = {
   newDeckSchema: Joi.object().keys({
     name: Joi.string().min(6).required(),
     description: Joi.string().min(10).required(),
+  }),
+  newItemSchema: Joi.object().keys({
+    name: Joi.string().min(6).required(),
+    type: Joi.string().min(2).max(4).required(),
+    price: Joi.string().max(10).required(),
+    origin: Joi.string().max(20).required(),
+    img: Joi.string().required(),
+    size: Joi.required(),
+    img_details: Joi.required(),
+    quantity: Joi.required(),
+    description: Joi.string().min(10).required(),
+
   }),
 
   optionDeck: Joi.object().keys({
