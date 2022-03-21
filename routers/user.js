@@ -13,13 +13,13 @@ router.route('/')
   .get(UserController.index)
   .post(validateBody(schemas.userSchema) ,UserController.newUser);
 
-router.route('/auth/google').post( passport.authenticate('google-plus-token', {session: true}), UserController.authGoogle)  
+router.route('/auth/google').post( passport.authenticate('google-plus-token', {session: false}), UserController.authGoogle)  
 
-router.route('/auth/facebook').post( passport.authenticate('facebook-token', {session: true}), UserController.authFacebook)  
+router.route('/auth/facebook').post( passport.authenticate('facebook-token', {session: false}), UserController.authFacebook)  
 
 router.route('/signup').post(validateBody(schemas.authSignUpSchema), UserController.signUp);
 
-router.route('/signin').post(validateBody(schemas.authSignInSchema), passport.authenticate('local', ({session: true})), UserController.signIn);
+router.route('/signin').post(validateBody(schemas.authSignInSchema), passport.authenticate('local', ({session: false})), UserController.signIn);
 
 router.route('/secret').get(passport.authenticate('jwt', {session: false}), UserController.secrect); //Test
 
