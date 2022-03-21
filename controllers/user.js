@@ -34,14 +34,14 @@ const authFacebook = async (req, res, next) => {
 }
 
 const signUp = async (req, res, next) => {
-  const {firstName, lastName, email, password} = req.value.body;
+  const {fullname, email, password, sdt, username} = req.value.body;
 
-  //Check if there is a user same email
-  const foundUser = await User.findOne({email});
-  if(foundUser) return res.status(403).json({error: {message: "Emal is already in use. "}})
+  //Check if there is a user same username
+  const foundUser = await User.findOne({username});
+  if(foundUser) return res.status(403).json({error: {message: "Username is already in use. "}})
 
   //Create new user
-  const newUser = await new User({firstName, lastName, email, password});
+  const newUser = await new User({fullname, username, password, sdt});
   await newUser.save();
 
   // const token = encodedToken(newUser._id);
