@@ -11,10 +11,10 @@ const ItemSchema = new Schema({
     price: {
         type: String,
     },
-    img: {
+    image: {
         type: String,
     },
-    img_details: Array,
+    image_details: Array,
     description: {
         type: String,
     },

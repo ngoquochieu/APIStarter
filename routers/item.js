@@ -13,6 +13,6 @@ router.route('/')
   .get(ItemController.getAll)
   .post(validateBody(schemas.newItemSchema), ItemController.newItem)
 
-router.route('/:itemID').get(ItemController.getItemID);
+router.route('/:itemID').get(validateParam(schemas.idSchema, 'itemID'), ItemController.getItemID);
 
 module.exports = router;

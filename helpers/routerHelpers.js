@@ -86,9 +86,9 @@ const schemas = {
     type: Joi.string().min(2).max(4).required(),
     price: Joi.string().max(10).required(),
     origin: Joi.string().max(20).required(),
-    img: Joi.string().required(),
+    image: Joi.string().required(),
     size: Joi.required(),
-    img_details: Joi.required(),
+    image_details: Joi.required(),
     quantity: Joi.required(),
     description: Joi.string().min(10).required(),
 

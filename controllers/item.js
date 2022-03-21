@@ -20,7 +20,11 @@ const newItem = async (req, res, next) => {
 }
 
 const getItemID = async (req, res, next) => {
+  const { itemID } = req.value.params;
 
+  const item = await Item.findById(itemID);
+
+  return res.status(200).json({ item });
 }
 
 module.exports = {
