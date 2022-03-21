@@ -7,6 +7,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const secureApp = require('helmet');
 const passport = require('passport');
+const  cors = require('cors'); 
 
 const swaggerLoader = require('./loaders/swaggerLoader');
 // Set up connect mongodb by mongoose
@@ -22,6 +23,7 @@ mongoose
 
 const app = express();
 swaggerLoader(app);
+app.use(cors());
 app.use(secureApp());
 app.use(passport.initialize())
 
