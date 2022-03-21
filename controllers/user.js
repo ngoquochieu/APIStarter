@@ -54,7 +54,10 @@ const signIn = async (req, res, next) => {
   const token = encodedToken(req.user._id)
   
   res.setHeader('Authorization', token);
-  res.status(200).json({success: true});
+  return res.status(200).json({
+    success: true,
+    token,
+  });
 };
 
 const secrect = async (req, res, next) => {
