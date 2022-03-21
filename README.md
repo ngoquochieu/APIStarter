@@ -1,4 +1,4 @@
-<h1 align="center">API Library Decks</h1>
+<!-- <h1 align="center">API Library Decks</h1>
 <sub>Made with ❤️ by <a href="https://www.facebook.com/qhieuit">Ngo Quoc Hieu</a></sub>
 
 ### Docs: https://api-start-deploy.herokuapp.com/api-docs/
@@ -22,4 +22,4 @@
 - [x] **Create new deck**
 - [x] **Get a deck**
 - [x] **Update a deck**
-- [x] **Delete a deck**
+- [x] **Delete a deck** -->
