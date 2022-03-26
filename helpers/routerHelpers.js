@@ -34,12 +34,10 @@ const validateParam = (schema, name) => {
 
 const schemas = {
   authSignUpSchema: Joi.object().keys({
-    // firstName: Joi.string().min(2).required(),
-    // lastName: Joi.string().min(2).required(),
      fullname: Joi.string().min(6).required(),
-    // email: Joi.string()
-    //   .email({ minDomainSegments: 2, tlds: { allow: ['com'] } })
-    //   .required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: ['com'] } })
+      .required(),
     username: Joi.string().min(3).required(),
     phone: Joi.string().min(10).max(10).required(),
     password: Joi.string().min(6).required(),
