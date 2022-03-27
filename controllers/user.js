@@ -37,8 +37,11 @@ const signUp = async (req, res, next) => {
   const {fullname, password, phone, username, email} = req.value.body;
 
   //Check if there is a user same username
-  const foundUser = await User.findOne({username});
-  if(foundUser) return res.status(403).json({error: {message: "Username is already in use. "}})
+  const foundUserName = await User.findOne({username});
+  if(foundUserName) return res.status(403).json({error: {message: "Username is already in use. "}})
+
+  const foundUserEmail = await User.findOne({email});
+  if(foundUserEmail) return res.status(403).json({error: {message: "Email is already in use. "}})
 
   //Create new user
   const newUser = await new User({fullname, username, password, phone, email});
@@ -47,7 +50,7 @@ const signUp = async (req, res, next) => {
   // const token = encodedToken(newUser._id);
   // res.setHeader('Authorization', token);
   
-  res.status(201).json({success:true});
+  return res.status(201).json({success:true});
 };
 
 const signIn = async (req, res, next) => {
@@ -57,6 +60,7 @@ const signIn = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     token,
+    username: req.user.fullname
   });
 };
 
