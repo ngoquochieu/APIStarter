@@ -60,7 +60,8 @@ const signIn = async (req, res, next) => {
   return res.status(200).json({
     success: true,
     token,
-    username: req.user.fullname
+    username: req.user.fullname,
+    userID: req.user._id,
   });
 };
 
