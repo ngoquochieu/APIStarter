@@ -25,7 +25,7 @@ const ItemSchema = new Schema({
         type: Number,
         default: 0,
     },
-    color: String,
+    color: Array,
     size: Array,
     status: {
         type: Boolean,
