@@ -12,6 +12,7 @@ const passportConfig = require('../middlewares/passport');
 router.route('/')
   .get(ItemController.getAll)
   .post(validateBody(schemas.newItemSchema), ItemController.newItem)
+  // .put(ItemController.updateItem)
 
 router.route('/:itemID').get(validateParam(schemas.idSchema, 'itemID'), ItemController.getItemID);
 

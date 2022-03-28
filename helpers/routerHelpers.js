@@ -89,6 +89,7 @@ const schemas = {
     image_details: Joi.required(),
     quantity: Joi.required(),
     description: Joi.string().min(10).required(),
+    color:Joi.required(),
 
   }),
 

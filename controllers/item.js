@@ -19,6 +19,14 @@ const newItem = async (req, res, next) => {
   });
 }
 
+const updateItem = async (req, res, next) => {
+  const _res = await Item.updateMany({color:['Đen', 'Trắng']})
+  return res.status(200).json({message:{
+    success:true,
+    numberUpdate: _res.acknowledged
+  }})
+}
+
 const getItemID = async (req, res, next) => {
   const { itemID } = req.value.params;
 
@@ -30,5 +38,6 @@ const getItemID = async (req, res, next) => {
 module.exports = {
   getAll,
   newItem,
+  updateItem,
   getItemID,
 };

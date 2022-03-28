@@ -61,6 +61,9 @@ const signIn = async (req, res, next) => {
     success: true,
     token,
     username: req.user.fullname,
+    address: req.user.address,
+    phone: req.user.phone,
+    email: req.user.email,
     userID: req.user._id,
   });
 };
