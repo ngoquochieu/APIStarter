@@ -179,6 +179,7 @@ const verify = async (req, res, next) => {
    bcrypt.compare(email, token, async (err, result) => {
     if(result) {
       const isUpdate = await User.findOneAndUpdate({email}, {verify: new Date().getTime() + 300 * 1000})
+      // console.log(isUpdate.verify)
       return isUpdate && res.status(200).json({message: {success:true}})
     }else{
       return res.status(401).json({message: {success: false}})

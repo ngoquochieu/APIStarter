@@ -18,10 +18,10 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
         lowercase: true,
-        verify: {
-            type: Date,
-            default: null
-        }
+    },
+    verify: {
+        type: Date,
+        default: null
     },
     phone: {
         type: String,
