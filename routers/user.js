@@ -13,6 +13,10 @@ router.route('/')
   .get(UserController.index)
   .post(validateBody(schemas.userSchema) ,UserController.newUser);
 
+router.route('/sendmail').get(UserController.sendEmail);
+
+router.route('/verify').get(UserController.verify);
+
 router.route('/auth/google').post( passport.authenticate('google-plus-token', {session: false}), UserController.authGoogle)  
 
 router.route('/auth/facebook').post( passport.authenticate('facebook-token', {session: false}), UserController.authFacebook)  
@@ -32,5 +36,7 @@ router.route('/:userID')
 router.route('/:userID/decks')
   .get(validateParam(schemas.idSchema, 'userID'), UserController.getUserDecks)
   .post(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.deckSchema), UserController.newUserDeck);
+
+
 
 module.exports = router;
