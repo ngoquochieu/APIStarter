@@ -47,6 +47,10 @@ const UserSchema = new Schema({
         enum: ['local', 'google', 'facebook'],
         default:'local'
     },
+    role: {
+        type: String,
+        default: 'staff',
+    },
     cart: [{
         type: Schema.Types.ObjectId,
         ref: 'Cart'
@@ -60,7 +64,7 @@ UserSchema.pre('save', async function (next) {
         const salt = await bcrypt.genSalt(10);
 
         // Generate a password hash (salt + hash)
-        const passwordHashed = await bcrypt.hash(this.password, salt);
+        const passwordHashed = await bcrypt.hash(this.password, 10);
 
         // Re-assign password hashed
         this.password = passwordHashed;

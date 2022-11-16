@@ -1,9 +1,4 @@
-/**
- * We can interact with mongoose in three different ways:
- * [v] Callback
- * [V] Promises
- * [V] Async/Await (Promises)
- */
+
 const Deck = require('../models/Deck');
 const User = require('../models/User');
 
@@ -11,7 +6,7 @@ const JWT = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config/index');
 const mailer = require('../helpers/mailer'); 
 const bcrypt = require('bcryptjs');
- const salt = 'ngoquochieu';
+
 
 const encodedToken = (userID) => {
     return JWT.sign({
@@ -26,14 +21,14 @@ const authGoogle = async (req, res, next) => {
   const token = encodedToken(req.user._id);
 
   res.setHeader('Authorization', token);
-  res.status(200).json({success: true});
+  res.status(200).json({status: true});
 }
 
 const authFacebook = async (req, res, next) => {
   const token = encodedToken(req.user._id);
 
   res.setHeader('Authorization', token);
-  res.status(200).json({success: true});
+  res.status(200).json({status: true});
 }
 
 const signUp = async (req, res, next) => {
@@ -58,7 +53,7 @@ const signUp = async (req, res, next) => {
      return res.status(403).json({error: {message: "Account creation failed"}})
    }
    await newUser.save();
-   return res.status(201).json({success:true});
+   return res.status(201).json({status:true});
 
   // const token = encodedToken(newUser._id);
   // res.setHeader('Authorization', token);
@@ -71,7 +66,7 @@ const signIn = async (req, res, next) => {
   
   res.setHeader('Authorization', token);
   return res.status(200).json({
-    success: true,
+    status: true,
     token,
     username: req.user.fullname,
     address: req.user.address,
@@ -81,6 +76,50 @@ const signIn = async (req, res, next) => {
   });
 };
 
+const forgotPassword = async (req, res, next) => {
+  const {email} = req.value.body;
+  const user = await User.findOne({email});
+  if(email) {
+    const emaildHashed = await  bcrypt.hash(email, 10);
+    mailer.sendMail(email, 'Verify mail' , `<a href = "${process.env.URL}/users/confirmEmail?email=${email}&token=${emaildHashed}"> Confirm Email</a>`);
+    return res.status(200).json({status:true});
+  }
+  return res.status(403).json({error: {message: "Email is not found"}})
+
+}
+
+const resetPassword = async (req, res, next) => {
+ const {email, password} = req.value.body;
+
+ const user = await User.findOneAndUpdate({email}, {
+   password: password, 
+   verify: new Date().getTime() + 300 * 1000
+  })
+  console.log(user)
+  if(user) {
+    await user.save();
+    return res.status(200).json({status:true});
+  }
+  return res.status(403).json({status: false});
+
+}
+
+const confirmEmail = async (req, res, next) => {
+  const {email, token} = req.query;
+  bcrypt.compare(email, token, async (err, result) => {
+    if(result) {
+      return res.status(200).json({
+        status: true,
+        email
+      })
+    }else{
+      return res.status(401).json({
+        status: false,
+        message: "Confirm failure"
+      })
+    }
+  })
+}
 const secrect = async (req, res, next) => {
   return res.status(200).json({resource: true})
 };
@@ -117,7 +156,7 @@ const newUser = async (req, res, next) => {
 
   await newUser.save();
 
-  return res.status(201).json({ success: true });
+  return res.status(201).json({ status: true });
 };
 
 const newUserDeck = async (req, res, next) => {
@@ -163,7 +202,7 @@ const updateUser = async (req, res, next) => {
 
   const result = await User.findByIdAndUpdate(userID, newUser);
 
-  return res.status(200).json({ message: {success: true }});
+  return res.status(200).json({status: true});
 };
 
 const deleteUser = async (req, res, next) => {
@@ -180,19 +219,32 @@ const verify = async (req, res, next) => {
     if(result) {
       const isUpdate = await User.findOneAndUpdate({email}, {verify: new Date().getTime() + 300 * 1000})
       // console.log(isUpdate.verify)
-      return isUpdate && res.status(200).json({message: {success:true}})
+      return isUpdate && res.status(200).json({status: true})
     }else{
-      return res.status(401).json({message: {success: false}})
+      return res.status(401).json({
+        status: true,
+        message: "Confirm failure"
+      })
     }
   })
   
 }
 
+const compare = async( req, res, next) => {
+ const user = await User.findOne({email: "ngoquochieu06112001@gmail.com"})
+ const isCorrectPassword =  await bcrypt.compare("123123", "$2a$10$5YzeRfJm1oEQI68blYGoRuQuTEWIUaDeABPZMK9NVcJVuWzUaD25G");
+console.log(isCorrectPassword)
+}
+
 module.exports = {
+  compare,
   authGoogle,
   authFacebook,
   signUp,
   signIn,
+  forgotPassword,
+  resetPassword,
+  confirmEmail,
   secrect,
   getUser,
   getUserDecks,
