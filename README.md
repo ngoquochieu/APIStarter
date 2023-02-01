@@ -13,9 +13,7 @@
 - [x] **Get list deck of user**
 - [x] **Create new user**
 - [x] **Update a user**
-<!-- - [x] **User Create new deck**
-- [] **Choose deck**
-- [] **Delete user** -->
+
 
     ### Clothes
 - [x] **Get all Clothes**
@@ -24,3 +22,6 @@
 - [x] **Get a deck**
 - [x] **Update a deck**
 - [x] **Delete a deck** -->
+<!-- - [x] **User Create new deck**
+- [] **Choose deck**
+- [] **Delete user** -->
