@@ -12,7 +12,7 @@ const  cors = require('cors');
 const swaggerLoader = require('./loaders/swaggerLoader');
 // Set up connect mongodb by mongoose
 mongoose
-  .connect('mongodb+srv://hieu123:hieu123@cluster0.rylsg.mongodb.net/API_STORE?retryWrites=true&w=majority', {
+  .connect(process.env.DATABASE, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
   })
