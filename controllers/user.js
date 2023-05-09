@@ -52,12 +52,12 @@ const signUp = async (req, res, next) => {
     gender,
   });
   if (newUser) {
-    const emaildHashed = await bcrypt.hash(email, 10);
-    mailer.sendMail(
-      email,
-      'Verify mail',
-      `<a href = "${process.env.URL}/users/verify?email=${email}&token=${emaildHashed}"> Verify</a>`
-    );
+    // const emaildHashed = await bcrypt.hash(email, 10);
+    // mailer.sendMail(
+    //   email,
+    //   'Verify mail',
+    //   `<a href = "${process.env.URL}/users/verify?email=${email}&token=${emaildHashed}"> Verify</a>`
+    // );
   } else {
     return res
       .status(403)
