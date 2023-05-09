@@ -35,7 +35,6 @@ const UserSchema = new Schema({
   },
   phone: {
     type: String,
-    unique: true,
   },
   address: {
     type: String,
@@ -61,12 +60,16 @@ const UserSchema = new Schema({
     type: String,
     default: 'user',
   },
-  cart: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Cart',
-    },
-  ],
+  // cart: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: 'Cart',
+  //   },
+  // ],
+  fanpage: {
+    type: Schema.Types.ObjectId,
+    ref: 'Owner',
+  },
   createdAt: {
     type: Date,
     default: Date.now,
