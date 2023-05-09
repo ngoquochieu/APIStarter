@@ -83,10 +83,10 @@ passport.use(new FacebookTokenStrategy({
 //Passport local
 passport.use(new LocalJwtStrategy({
     // usernameField: 'email'
-    usernameField: 'username'
-}, async (username, password, done) => {
+    usernameField: 'email'
+}, async (email, password, done) => {
     try {
-        const user = await User.findOne({username});
+        const user = await User.findOne({email});
         if(!user) return done(null, false);
 
         const isCorrectPassword = await user.isValidPassword(password);
