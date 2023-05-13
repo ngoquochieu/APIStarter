@@ -66,10 +66,8 @@ const UserSchema = new Schema({
   //     ref: 'Cart',
   //   },
   // ],
-  fanpage: {
-    type: Schema.Types.ObjectId,
-    ref: 'Owner',
-  },
+  page: {},
+  post: [],
   createdAt: {
     type: Date,
     default: Date.now,

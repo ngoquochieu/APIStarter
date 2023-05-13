@@ -1,5 +1,5 @@
 const Post = require('../models/Post');
-
+const User = require('../models/User');
 const index = async (req, res, next) => {
   const posts = await Post.find({});
 
@@ -7,6 +7,8 @@ const index = async (req, res, next) => {
 };
 
 const createPost = async (req, res, next) => {
+  const userID = req.user.id;
+  const user = await User.findById({ _id: userID });
   const { title, img, like, share } = req.body;
   const newPost = await new Post({
     title,
@@ -15,7 +17,9 @@ const createPost = async (req, res, next) => {
     share,
   });
   if (newPost) {
-    await newPost.save();
+    const post = await newPost.save();
+    user.post.push(post);
+    await user.save();
     return res.status(201).json({ message: 'Create success!' });
   }
   return res.status(403).json({ error: { message: 'Failed create!' } });

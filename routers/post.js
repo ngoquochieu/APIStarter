@@ -1,7 +1,7 @@
 const router = require('express-promise-router')();
+const passport = require('passport');
 const multer = require('multer');
 
-const { model } = require('mongoose');
 const PostController = require('../controllers/post');
 
 // const storage = multer.diskStorage({
@@ -18,6 +18,9 @@ router
   .route('/')
   .get(PostController.index)
   // .post(upload.none(), PostController.createPost)
-  .post(PostController.createPost);
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    PostController.createPost
+  );
 
 module.exports = router;
