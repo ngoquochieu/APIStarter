@@ -76,17 +76,19 @@ const signIn = async (req, res, next) => {
   res.setHeader('Authorization', token);
   return res.status(200).json({
     status: true,
-    token,
-    userID: req.user._id,
-    fullName: req.user.fullname,
-    email: req.user.email,
-    avatar: req.user.avatar,
-    birth: req.user.birth,
-    gender: req.user.gender,
-    phone: req.user.phone,
-    role: req.user.role,
-    page: req.user.page,
-    post: req.user.post,
+    user: {
+      // token,
+      userID: req.user._id,
+      fullName: req.user.fullname,
+      email: req.user.email,
+      avatar: req.user.avatar,
+      birth: req.user.birth,
+      gender: req.user.gender,
+      phone: req.user.phone,
+      role: req.user.role,
+      page: req.user.page,
+      post: req.user.post,
+    },
   });
 };
 
