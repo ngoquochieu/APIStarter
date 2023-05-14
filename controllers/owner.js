@@ -22,6 +22,8 @@ const createOwner = async (req, res, next) => {
     lat,
     lon,
     type,
+    denomina,
+    banner,
   } = req.body;
   const newOwner = await new Owner({
     name,
@@ -36,6 +38,8 @@ const createOwner = async (req, res, next) => {
     ratting,
     location: { lat, lon },
     type,
+    denomina,
+    banner,
   });
   if (newOwner) {
     const owner = await newOwner.save();

@@ -40,11 +40,18 @@ const OwnerSchema = new Schema({
       type: String,
     },
   },
+  denomina: {
+    type: String,
+    enum: ['VND', 'USA'],
+  },
   type: {
     type: String,
     enum: ['coffee', 'restaurant'],
   },
   img: {
+    type: String,
+  },
+  banner: {
     type: String,
   },
   createdAt: {
