@@ -14,12 +14,14 @@ const createOwner = async (req, res, next) => {
     introduce,
     phone,
     website,
-    price,
+    priceStart,
+    priceEnd,
     open,
     close,
     ratting,
     lat,
     lon,
+    type,
   } = req.body;
   const newOwner = await new Owner({
     name,
@@ -27,14 +29,15 @@ const createOwner = async (req, res, next) => {
     introduce,
     phone,
     website,
-    price,
+    priceStart,
+    priceEnd,
     open,
     close,
     ratting,
     location: { lat, lon },
+    type,
   });
   if (newOwner) {
-    console.log(user);
     const owner = await newOwner.save();
     user.page = owner;
     user.save();

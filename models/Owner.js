@@ -17,7 +17,10 @@ const OwnerSchema = new Schema({
   website: {
     type: String,
   },
-  price: {
+  priceStart: {
+    type: String,
+  },
+  priceEnd: {
     type: String,
   },
   open: {
@@ -36,6 +39,10 @@ const OwnerSchema = new Schema({
     lon: {
       type: String,
     },
+  },
+  type: {
+    type: String,
+    enum: ['coffee', 'restaurant'],
   },
   img: {
     type: String,
