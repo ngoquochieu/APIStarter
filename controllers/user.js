@@ -77,7 +77,7 @@ const signIn = async (req, res, next) => {
   return res.status(200).json({
     status: true,
     user: {
-      // token,
+      token,
       userID: req.user._id,
       fullName: req.user.fullname,
       email: req.user.email,
