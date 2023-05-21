@@ -6,7 +6,8 @@ const index = async (req, res, next) => {
 };
 
 const createOwner = async (req, res, next) => {
-  const userID = req.user.id;
+  // const userID = req.user.id;
+  const userID = req.body.userID;
   const user = await User.findById({ _id: userID });
   const {
     name,
