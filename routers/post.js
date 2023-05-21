@@ -19,7 +19,7 @@ router
   .get(PostController.index)
   // .post(upload.none(), PostController.createPost)
   .post(
-    passport.authenticate('jwt', { session: false }),
+    // passport.authenticate('jwt', { session: false }),
     PostController.createPost
   );
 
