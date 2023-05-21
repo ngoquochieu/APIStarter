@@ -232,6 +232,14 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   const { userID } = req.value.params;
+  console.log(userID);
+  try {
+    await User.deleteOne({ _id: userID });
+    return res.status(200).send({ message: 'DELETE_SUCCESSFUL' });
+  } catch (error) {
+    console.log(error);
+    return res.status(401).send({ message: 'DELETE_NOT_SUCCESSFUL' });
+  }
 };
 
 const sendEmail = async (req, res, next) => {
