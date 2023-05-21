@@ -66,7 +66,10 @@ const UserSchema = new Schema({
   //     ref: 'Cart',
   //   },
   // ],
-  page: {},
+  page: {
+    type: Object,
+    default: {},
+  },
   post: [],
   createdAt: {
     type: Date,

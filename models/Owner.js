@@ -42,11 +42,11 @@ const OwnerSchema = new Schema({
   },
   denomina: {
     type: String,
-    enum: ['VND', 'USA'],
+    // enum: ['VND', 'USA'],
   },
   type: {
     type: String,
-    enum: ['coffee', 'restaurant'],
+    // enum: ['coffee', 'restaurant'],
   },
   img: {
     type: String,

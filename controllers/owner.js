@@ -7,7 +7,7 @@ const index = async (req, res, next) => {
 
 const createOwner = async (req, res, next) => {
   // const userID = req.user.id;
-  const userID = req.body.userID;
+  const { userID } = req.body;
   const user = await User.findById({ _id: userID });
   const {
     name,
@@ -27,6 +27,7 @@ const createOwner = async (req, res, next) => {
     banner,
     img,
   } = req.body;
+  // console.log(req.body);
   const newOwner = await new Owner({
     name,
     description,
@@ -37,7 +38,6 @@ const createOwner = async (req, res, next) => {
     priceEnd,
     open,
     close,
-    ratting,
     location: { lat, lon },
     type,
     denomina,

@@ -50,6 +50,9 @@ const signUp = async (req, res, next) => {
     avatar,
     birth,
     gender,
+    page: {
+      a: 1,
+    },
   });
   if (newUser) {
     // const emaildHashed = await bcrypt.hash(email, 10);
