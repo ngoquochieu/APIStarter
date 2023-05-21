@@ -7,14 +7,12 @@ const index = async (req, res, next) => {
 };
 
 const createPost = async (req, res, next) => {
-  const userID = req.user.id;
+  const { userID } = req.body;
   const user = await User.findById({ _id: userID });
-  const { title, img, like, share } = req.body;
+  const { title, img } = req.body;
   const newPost = await new Post({
     title,
     img,
-    like,
-    share,
   });
   if (newPost) {
     const post = await newPost.save();
