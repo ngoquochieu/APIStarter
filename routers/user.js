@@ -28,12 +28,10 @@ router
   .route('/password/forgot')
   .post(validateBody(schemas.emailSchema), UserController.forgotPassword);
 
-router
-  .route('/password/reset')
-  .post(
-    // validateBody(schemas.resetPasswordSchema),
-    UserController.resetPassword
-  );
+router.route('/password/reset').post(
+  // validateBody(schemas.resetPasswordSchema),
+  UserController.resetPassword
+);
 
 router.route('/confirmEmail').get(UserController.confirmEmail);
 
@@ -72,8 +70,8 @@ router
   .get(validateParam(schemas.idSchema, 'userID'), UserController.getUser)
   // .put(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchema), UserController.replaceUser)
   .patch(
-    validateParam(schemas.idSchema, 'userID'),
-    validateBody(schemas.userOption),
+    // validateParam(schemas.idSchema, 'userID'),
+    // validateBody(schemas.userOption),
     UserController.updateUser
   )
   .delete(validateParam(schemas.idSchema, 'userID'), UserController.deleteUser);
