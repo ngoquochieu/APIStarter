@@ -31,7 +31,7 @@ router
 router
   .route('/password/reset')
   .post(
-    validateBody(schemas.resetPasswordSchema),
+    // validateBody(schemas.resetPasswordSchema),
     UserController.resetPassword
   );
 

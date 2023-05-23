@@ -74,7 +74,8 @@ const signUp = async (req, res, next) => {
 };
 
 const signIn = async (req, res, next) => {
-  const token = encodedToken(req.user._id);
+  try {
+    const token = encodedToken(req.user._id);
 
   res.setHeader('Authorization', token);
   return res.status(200).json({
@@ -93,6 +94,10 @@ const signIn = async (req, res, next) => {
       post: req.user.post,
     },
   });
+  } catch (error) {
+    return res.status(401).send(error)
+  }
+  
 };
 
 const forgotPassword = async (req, res, next) => {
@@ -111,18 +116,12 @@ const forgotPassword = async (req, res, next) => {
 };
 
 const resetPassword = async (req, res, next) => {
-  const { email, password } = req.value.body;
+  const {userID, password,} = req.body
+  const user = await User.findByIdAndUpdate({_id: userID}, {password: password})
 
-  const user = await User.findOneAndUpdate(
-    { email },
-    {
-      password: password,
-      verify: new Date().getTime() + 300 * 1000,
-    }
-  );
-  console.log(user);
   if (user) {
-    await user.save();
+    const a = await user.save();
+    console.log(a);
     return res.status(200).json({ status: true });
   }
   return res.status(403).json({ status: false });
