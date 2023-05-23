@@ -35,6 +35,9 @@ const authFacebook = async (req, res, next) => {
 const signUp = async (req, res, next) => {
   const { fullname, password, phone, email, avatar, birth, gender } = req.body;
 
+  const salt = await bcrypt.genSalt(10);
+  const passwordHashed = await bcrypt.hash(password, 10);
+
   const foundUserEmail = await User.findOne({ email });
   if (foundUserEmail)
     return res
@@ -44,7 +47,7 @@ const signUp = async (req, res, next) => {
   //Create new user
   const newUser = await new User({
     fullname,
-    password,
+    password: passwordHashed,
     phone,
     email,
     avatar,

@@ -81,22 +81,25 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', async function (next) {
-  try {
-    if (this.authType !== 'local') next();
-    // Generate a salt
-    const salt = await bcrypt.genSalt(10);
+// UserSchema.pre('save', async function (next) {
+//   try {
+//     if (this.authType !== 'local') {
+//       next();
+//     }
+//     console.log(this.authType);
+//     // Generate a salt
+//     const salt = await bcrypt.genSalt(10);
 
-    // Generate a password hash (salt + hash)
-    const passwordHashed = await bcrypt.hash(this.password, 10);
+//     // Generate a password hash (salt + hash)
+//     const passwordHashed = await bcrypt.hash(this.password, 10);
 
-    // Re-assign password hashed
-    this.password = passwordHashed;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
+//     // Re-assign password hashed
+//     this.password = passwordHashed;
+//     next();
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 UserSchema.methods.isValidPassword = async function (newPassword) {
   try {
