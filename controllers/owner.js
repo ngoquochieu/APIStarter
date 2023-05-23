@@ -47,6 +47,7 @@ const createOwner = async (req, res, next) => {
   if (newOwner) {
     const owner = await newOwner.save();
     user.page = owner;
+    user.isPage = true;
     user.save();
     return res.status(201).json({ message: 'Create success!' });
   }
