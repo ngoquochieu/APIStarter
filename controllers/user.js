@@ -226,13 +226,19 @@ const newUserDeck = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   //number of fields
-  const { userID } = req.value.params;
+  try {
+    const { userID } = req.value.params;
 
-  const newUser = req.value.body;
+    const newUser = req.body;
 
-  const result = await User.findByIdAndUpdate(userID, newUser);
+    const result = await User.findByIdAndUpdate(userID, newUser);
 
-  return res.status(200).json({ status: true });
+    return res
+      .status(200)
+      .json({ message: 'UPDATE_USER_SUCCESS', data: result });
+  } catch (error) {
+    return res.status(401).json({ message: 'UPDATE_USER_FALID', data: result });
+  }
 };
 
 const deleteUser = async (req, res, next) => {

@@ -70,7 +70,7 @@ router
   .get(validateParam(schemas.idSchema, 'userID'), UserController.getUser)
   // .put(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchema), UserController.replaceUser)
   .patch(
-    // validateParam(schemas.idSchema, 'userID'),
+    validateParam(schemas.idSchema, 'userID'),
     // validateBody(schemas.userOption),
     UserController.updateUser
   )
