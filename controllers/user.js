@@ -245,10 +245,12 @@ const updateUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   const { userID } = req.value.params;
   const user = await User.findById({ _id: userID });
-  const idOwner = user.page._id.toString();
+  const idOwner = user.page._id ? user.page._id.toString() : '';
   try {
     await User.deleteOne({ _id: userID });
-    await Owner.deleteOne({ _id: idOwner });
+    if (idOwner) {
+      await Owner.deleteOne({ _id: idOwner });
+    }
     return res.status(200).send({ message: 'DELETE_SUCCESSFUL' });
   } catch (error) {
     console.log(error);
