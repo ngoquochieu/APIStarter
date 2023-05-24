@@ -35,9 +35,11 @@ const OwnerSchema = new Schema({
   location: {
     lat: {
       type: String,
+      default: null,
     },
     lon: {
       type: String,
+      default: null,
     },
   },
   denomina: {
