@@ -42,6 +42,9 @@ const OwnerSchema = new Schema({
       default: null,
     },
   },
+  address: {
+    type: String,
+  },
   denomina: {
     type: String,
     // enum: ['VND', 'USA'],
