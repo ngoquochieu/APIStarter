@@ -56,11 +56,12 @@ const createOwner = async (req, res, next) => {
   return res.status(403).json({ error: { message: 'Failed create!' } });
 };
 const editOwner = async (req, res, next) => {
-  const { id, lat, lon } = req.body;
+  const { id } = req.value.params;
+  const { lat, lon, isPublic } = req.body;
   const updateOwner = await findByIdAndUpdate(
     id,
     { location: { lat, lon } },
-    { isPage: true }
+    { isPublic }
   );
   if (updateOwner) {
     updateOwner.save();
