@@ -26,6 +26,7 @@ const createOwner = async (req, res, next) => {
     denomina,
     banner,
     img,
+    address,
   } = req.body;
   // console.log(req.body);
   const newOwner = await new Owner({
@@ -43,6 +44,7 @@ const createOwner = async (req, res, next) => {
     denomina,
     banner,
     img,
+    address,
   });
   if (newOwner) {
     const owner = await newOwner.save();
