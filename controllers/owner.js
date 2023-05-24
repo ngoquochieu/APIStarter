@@ -58,7 +58,7 @@ const createOwner = async (req, res, next) => {
 const editOwner = async (req, res, next) => {
   const { id } = req.value.params;
   const { lat, lon, isPublic } = req.body;
-  const updateOwner = await findByIdAndUpdate(
+  const updateOwner = await Owner.findByIdAndUpdate(
     id,
     { location: { lat, lon } },
     { isPublic }
