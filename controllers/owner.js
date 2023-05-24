@@ -55,7 +55,31 @@ const createOwner = async (req, res, next) => {
   }
   return res.status(403).json({ error: { message: 'Failed create!' } });
 };
+const editOwner = async (req, res, next) => {
+  const { id, lat, lon } = req.body;
+  const updateOwner = await findByIdAndUpdate(
+    id,
+    { location: { lat, lon } },
+    { isPage: true }
+  );
+  if (updateOwner) {
+    updateOwner.save();
+    return res.status(201).json({ message: 'UPDATE_SUCCESS' });
+  }
+  return res.status(403).json({ message: 'UPDATE_FAIL' });
+};
+const getDetailOwner = async (req, res, next) => {
+  const { id } = req.value.params;
+  const owner = await Owner.findById(id);
+  if (owner) {
+    res.status(200).send({ message: 'GET_DETAIL_SUCCESS', data: owner });
+  } else {
+    res.status(401).send({ message: 'GET_DETAIL_FAIL', data: {} });
+  }
+};
 module.exports = {
   index,
   createOwner,
+  editOwner,
+  getDetailOwner,
 };
