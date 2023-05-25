@@ -107,7 +107,7 @@ passport.use(
         if (!user) return done(null, false);
 
         const isCorrectPassword = await user.isValidPassword(password);
-        if (!isCorrectPassword) return done(null, { isLogin: false });
+        if (!isCorrectPassword) return done(null, false);
         // if(user.password !== password) return done(null, false)
 
         done(null, user);

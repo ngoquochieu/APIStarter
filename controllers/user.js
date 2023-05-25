@@ -79,7 +79,6 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   try {
-    if (!req.isLogin) return res.status(401).json({ message: 'Login fail' });
     if (req.user) {
       const token = encodedToken(req.user._id);
       res.setHeader('Authorization', token);
@@ -100,6 +99,8 @@ const signIn = async (req, res, next) => {
           isPage: req.user.isPage,
         },
       });
+    } else {
+      return res.status(401).json({ message: 'Login fail' });
     }
   } catch (error) {
     console.log(error);
