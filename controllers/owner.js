@@ -58,11 +58,13 @@ const createOwner = async (req, res, next) => {
 const editOwner = async (req, res, next) => {
   const { id } = req.value.params;
   const { lat, lon, isPublic } = req.body;
+  console.log(typeof req.body.isPublic);
   const updateOwner = await Owner.findByIdAndUpdate(
     id,
-    { location: { lat, lon } },
-    { isPublic }
+    { location: { lat, lon } }
+    // { isPublic: isPublic }
   );
+  updateOwner.isPublic = isPublic;
   if (updateOwner) {
     updateOwner.save();
     return res.status(201).json({ message: 'UPDATE_SUCCESS' });
