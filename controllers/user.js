@@ -121,17 +121,17 @@ const forgotPassword = async (req, res, next) => {
 
 const resetPassword = async (req, res, next) => {
   const { userID, password } = req.body;
+  const passwordHashed = await bcrypt.hash(password, 10);
   const user = await User.findByIdAndUpdate(
     { _id: userID },
-    { password: password }
+    { password: passwordHashed }
   );
 
   if (user) {
     const a = await user.save();
     console.log(a);
     return res.status(200).json({ status: true });
-  }
-  return res.status(403).json({ status: false });
+  } else return res.status(403).json({ status: false });
 };
 
 const confirmEmail = async (req, res, next) => {
