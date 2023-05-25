@@ -79,28 +79,30 @@ const signUp = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
   try {
-    const token = encodedToken(req.user._id);
-
-    res.setHeader('Authorization', token);
-    return res.status(200).json({
-      status: true,
-      user: {
-        token,
-        userID: req.user._id,
-        fullName: req.user.fullname,
-        email: req.user.email,
-        avatar: req.user.avatar,
-        birth: req.user.birth,
-        gender: req.user.gender,
-        phone: req.user.phone,
-        role: req.user.role,
-        page: req.user.page,
-        post: req.user.post,
-        isPage: req.user.isPage,
-      },
-    });
+    if (!req.isLogin) return res.status(401).json({ message: 'Login fail' });
+    if (req.user) {
+      const token = encodedToken(req.user._id);
+      res.setHeader('Authorization', token);
+      return res.status(200).json({
+        status: true,
+        user: {
+          token,
+          userID: req.user._id,
+          fullName: req.user.fullname,
+          email: req.user.email,
+          avatar: req.user.avatar,
+          birth: req.user.birth,
+          gender: req.user.gender,
+          phone: req.user.phone,
+          role: req.user.role,
+          page: req.user.page,
+          post: req.user.post,
+          isPage: req.user.isPage,
+        },
+      });
+    }
   } catch (error) {
-    return res.status(401).send(error);
+    console.log(error);
   }
 };
 
