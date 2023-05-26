@@ -80,9 +80,24 @@ const getDetailOwner = async (req, res, next) => {
     res.status(401).send({ message: 'GET_DETAIL_FAIL', data: {} });
   }
 };
+const deleteOwner = async (req, res, next) => {
+  const { id } = req.value.params;
+  const { userID } = req.body;
+  const user = await User.findById(userID);
+  const deleteOwner = await Owner.findByIdAndDelete(id);
+  if (deleteOwner) {
+    user.page = {};
+    user.isPage = false;
+    await user.save();
+    res.status(202).send({ message: 'DELETE_SUCCESS' });
+  } else {
+    res.status(401).send({ message: 'DELETE_FAIL' });
+  }
+};
 module.exports = {
   index,
   createOwner,
   editOwner,
   getDetailOwner,
+  deleteOwner,
 };

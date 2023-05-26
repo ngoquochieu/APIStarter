@@ -12,7 +12,8 @@ router.route('/').get(OwnerController.index).post(OwnerController.createOwner);
 router
   .route('/:id')
   .patch(validateParam(schemas.idSchema, 'id'), OwnerController.editOwner)
-  .get(validateParam(schemas.idSchema, 'id'), OwnerController.getDetailOwner);
+  .get(validateParam(schemas.idSchema, 'id'), OwnerController.getDetailOwner)
+  .delete(validateParam(schemas.idSchema, 'id'), OwnerController.deleteOwner);
 
 module.exports = router;
 // passport.authenticate('jwt', { session: false }),
