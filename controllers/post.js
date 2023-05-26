@@ -8,7 +8,7 @@ const index = async (req, res, next) => {
 
 const createPost = async (req, res, next) => {
   const { userID } = req.body;
-  const user = await User.findById({ _id: userID });
+  const user = await User.findById(userID);
   const { title, img } = req.body;
   const newPost = await new Post({
     title,
